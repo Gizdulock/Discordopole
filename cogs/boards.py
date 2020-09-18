@@ -356,20 +356,20 @@ class Boards(commands.Cog):
                 length = 0
                 reward_mons = list()
                 reward_items = list()
-                reward_energy = list()
-                reward_stardust = list()
+                quest_reward_type = list()
+                quest_stardust = list()
                 lat_list = list()
                 lon_list = list()
                 
-                for quest_json, quest_text, lat, lon, stop_name, stop_id in quests:
+                for quest_json, quest_text, lat, lon, stop_name, stop_id, quest_reward_type, quest_stardust in quests:
                     quest_json = json.loads(quest_json)
 
                     found_rewards = True
                     emote = ""
                     mon_id = 0
                     item_id = 0
-                    energy = 0
-                    stardust = 0
+                    quest_reward_type = 7
+                    quest_stardust = 6
 
                     if self.bot.config['db_scan_schema'] == "rdm":
                         if 'pokemon_id' in quest_json[0]["info"]:
@@ -377,18 +377,18 @@ class Boards(commands.Cog):
                         elif 'item_id' in quest_json[0]["info"]:
                             item_id = quest_json[0]["info"]["item_id"]
                     elif self.bot.config['db_scan_schema'] == "mad":
-                        item_id = quest_json[0]["item"]["item"]
-                        mon_id = quest_json[0]["pokemon_encounter"]["pokemon_id"]
-                        energy = quest_json[0]["mega_resource"]["pokemon_id"]["quest_item_amount"]
-                        stardust = quest_json[0]["stardust"]["quest_item_amount"]
+                      item_id = quest_json[0]["item"]["item"]
+                      mon_id = quest_json[0]["pokemon_encounter"]["pokemon_id"]
+                      quest_reward_type = quest_json[0]["mega_resource"]["pokemon_id"]["quest_item_amount"]
+                      quest_stardust = quest_json[0]["stardust"]["quest_item_amount"]
                     if item_id in board["items"]:
                         emote = self.bot.custom_emotes[f"i{item_id}"]
                         reward_items.append([item_id, lat, lon])
-                    if energy in board["energy"]:
-                        emote = self.bot.custom_emotes[f"i{item_id}"]
+                    if energy in board["mega_resource"]:
+                        emote = self.bot.custom_emotes[f"i{mega_resource}"]
                         reward_energy.append([energy, lat, lon])
                     if stardust in board["startudst"]:
-                        emote = self.bot.custom_emotes[f"i{item_id}"]
+                        emote = self.bot.custom_emotes[f"i{mega_resource}"]
                         reward_stardust.append([stardust, lat, lon])
                     elif mon_id in board["mons"]:
                         emote = self.bot.custom_emotes[f"m{mon_id}"]

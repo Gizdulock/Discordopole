@@ -403,6 +403,8 @@ async def quest(ctx, areaname = "", *, reward):
     length = 0
     reward_mons = list()
     reward_items = list()
+    quest_stardust = list()
+    qzest_reward_type = list ()
     lat_list = list()
     lon_list = list()
 
@@ -412,6 +414,8 @@ async def quest(ctx, areaname = "", *, reward):
         found_rewards = True
         mon_id = 0
         item_id = 0
+        quest_stardust = 6
+        quest_reward_type = 7
 
         if bot.config['db_scan_schema'] == "rdm":
             if 'pokemon_id' in quest_json[0]["info"]:
@@ -422,7 +426,7 @@ async def quest(ctx, areaname = "", *, reward):
             item_id = quest_json[0]["item"]["item"]
             mon_id = quest_json[0]["pokemon_encounter"]["pokemon_id"]
             mega_resource = quest_json[0]["mega_resource"]["quest_item_amount"]["quest_pokemon_id"]
-            stardust = quest_json[0]["amount"]
+            stardust = quest_json[0]["quest_item_amount"]
         if item_id in items:
             reward_items.append([item_id, lat, lon])
             emote_name = f"i{item_id}"
@@ -434,7 +438,7 @@ async def quest(ctx, areaname = "", *, reward):
         if mega_resource in item_id:
             reward_items.append([mega_resource, lat, lon])
             emote_img = f"{bot.config['mon_icon_repo']}rewards/reward_{item_id}_1.png"
-        if stardust in stardust:
+        if stardust in item_id:
             reward_items.append([stardust, lat, lon])
             emote_img = f"{bot.config['mon_icon_repo']}rewards/reward_{item_id}_1.png"
         else:
