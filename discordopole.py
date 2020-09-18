@@ -381,6 +381,8 @@ async def quest(ctx, areaname = "", *, reward):
 
     items = list()
     mons = list()
+    quest_reward_type = list()
+    quest_stardust = list()
     item_found = False
     for item_id in bot.items:
         if bot.items[item_id]["name"].lower() == reward.lower():
@@ -404,7 +406,7 @@ async def quest(ctx, areaname = "", *, reward):
     lat_list = list()
     lon_list = list()
 
-    for quest_json, quest_text, lat, lon, stop_name, stop_id in quests:
+    for quest_json, quest_reward_type, quest_stardust, quest_text, lat, lon, stop_name, stop_id in quests:
         quest_json = json.loads(quest_json)
 
         found_rewards = True
@@ -419,6 +421,8 @@ async def quest(ctx, areaname = "", *, reward):
         elif bot.config['db_scan_schema'] == "mad":
             item_id = quest_json[0]["item"]["item"]
             mon_id = quest_json[0]["pokemon_encounter"]["pokemon_id"]
+            mega_resource = quest_json[0]["mega_resource"]["quest_item_amount"]["quest_pokemon_id"]
+            stardust = quest_json[0]["amount"]
         if item_id in items:
             reward_items.append([item_id, lat, lon])
             emote_name = f"i{item_id}"
@@ -427,6 +431,12 @@ async def quest(ctx, areaname = "", *, reward):
             reward_mons.append([mon_id, lat, lon])
             emote_name = f"m{mon_id}"
             emote_img = f"{bot.config['mon_icon_repo']}pokemon_icon_{str(mon_id).zfill(3)}_00.png"
+        if mega_resource in item_id:
+            reward_items.append([mega_resource, lat, lon])
+            emote_img = f"{bot.config['mon_icon_repo']}rewards/reward_{item_id}_1.png"
+        if stardust in stardust:
+            reward_items.append([stardust, lat, lon])
+            emote_img = f"{bot.config['mon_icon_repo']}rewards/reward_{item_id}_1.png"
         else:
             found_rewards = False
 

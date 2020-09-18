@@ -75,7 +75,7 @@ class Admin(commands.Cog):
         level_list = list(levels.split(','))
         level_list = list(map(int, level_list))
 
-        if all(i > 5 or i < 1 for i in level_list):
+        if all(i > 6 or i < 1 for i in level_list):
             embed.description = "Couldn't create Raid Board. Try chosing other levels."
             await message.edit(embed=embed)
             return
@@ -161,19 +161,16 @@ class Admin(commands.Cog):
                 if "lvl" in stat:
                     if "1" in stat:
                         stats.append("raid_lvl_1_active")
-                    elif "2" in stat:
-                        stats.append("raid_lvl_2_active")
                     elif "3" in stat:
                         stats.append("raid_lvl_3_active")
-                    elif "4" in stat:
-                        stats.append("raid_lvl_4_active")
                     elif "5" in stat:
                         stats.append("raid_lvl_5_active")
+                    elif "6" in stat:
+                        stats.append("raid_lvl_6_active")
                     elif "all" in stat:
+                        stats.append("raid_lvl_6_active")
                         stats.append("raid_lvl_5_active")
-                        stats.append("raid_lvl_4_active")
                         stats.append("raid_lvl_3_active")
-                        stats.append("raid_lvl_2_active")
                         stats.append("raid_lvl_1_active")
                 else:
                     stats.append("raid_active")
@@ -181,19 +178,16 @@ class Admin(commands.Cog):
                 if "lvl" in stat:
                     if "1" in stat:
                         stats.append("egg_lvl_1_active")
-                    elif "2" in stat:
-                        stats.append("egg_lvl_2_active")
                     elif "3" in stat:
                         stats.append("egg_lvl_3_active")
-                    elif "4" in stat:
-                        stats.append("egg_lvl_4_active")
                     elif "5" in stat:
                         stats.append("egg_lvl_5_active")
+                    elif "6" in stat:
+                        stats.append("egg_lvl_6_active")
                     elif "all" in stat:
+                        stats.append("egg_lvl_6_active")
                         stats.append("egg_lvl_5_active")
-                        stats.append("egg_lvl_4_active")
                         stats.append("egg_lvl_3_active")
-                        stats.append("egg_lvl_2_active")
                         stats.append("egg_lvl_1_active")
                 else:
                     stats.append("egg_active")
@@ -268,7 +262,7 @@ class Admin(commands.Cog):
         level_list = list(levels.split(','))
         level_list = list(map(int, level_list))
 
-        if all(i > 5 or i < 1 for i in level_list):
+        if all(i > 6 or i < 1 for i in level_list):
             embed.description = "Couldn't create Raid Channel. Try chosing other levels."
             await message.edit(embed=embed)
             return
@@ -322,6 +316,7 @@ class Admin(commands.Cog):
                     items.append(int(item_id))
                     found_item_id = item_id
                     item_found = True
+
             if not item_found:
                 mon = details(reward, self.bot.config['mon_icon_repo'], self.bot.config['language'])
                 mons.append(mon.id)
@@ -402,7 +397,7 @@ class Admin(commands.Cog):
                 title2 = mon.name
             title = f"{title2} {title}"
 
-        self.bot.boards['quests'].append({"channel_id": message.channel.id, "message_id": message.id, "title": title, "area": area, "mons": mons, "items": items})
+        self.bot.boards['quests'].append({"channel_id": message.channel.id, "message_id": message.id, "title": title, "area": area, "mons": mons, "items": items, "mega_resource": 12, "stardust": 6})
 
         with open("config/boards.json", "w") as f:
             f.write(json.dumps(self.bot.boards, indent=4))
@@ -423,7 +418,7 @@ class Admin(commands.Cog):
             print(f"@{ctx.author.name} tried to import emotes but is no Admin")
             return
 
-        needed_emote_names = ["ex_pass", "raid_egg_1", "raid_egg_2", "raid_egg_3", "raid_egg_4", "raid_egg_5", "gym_blue", "gym_red", "gym_yellow", "gym_white", "gym_grey", "blank", "raid", "cliff", "grunt_female", "pokeball", "pokestop", "lure", "lure_normal", "lure_glacial", "lure_mossy", "lure_magnetic"]
+        needed_emote_names = ["ex_pass", "raid_egg_1", "raid_egg_3", "raid_egg_5", "raid_egg_6", "gym_blue", "gym_red", "gym_yellow", "gym_white", "gym_grey", "blank", "raid", "cliff", "grunt_female", "pokeball", "pokestop", "lure", "lure_normal", "lure_glacial", "lure_mossy", "lure_magnetic"]
 
         if quick_name == ctx.guild.name:
             print(f"@{ctx.author.name} wants to import emotes in Server {ctx.guild.name} and said the name directly")

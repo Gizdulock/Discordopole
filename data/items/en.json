@@ -19,6 +19,14 @@
       "protoname": "ITEM_PREMIER_BALL",
       "name": "Premierball"
     },
+    "6":{
+      "poroname": "ITEM_STARDUST",
+      "name": "Stardust"
+    },  
+    "7": {
+      "protoname": "ITEM_ENERGY",
+      "name": "Mega Energy"
+    },
     "101": {
       "protoname": "ITEM_POTION",
       "name": "Potion"
